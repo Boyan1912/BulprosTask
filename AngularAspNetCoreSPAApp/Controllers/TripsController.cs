@@ -10,12 +10,17 @@ using Microsoft.AspNetCore.Cors;
 
 namespace AngularAspNetCoreSPAApp.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     [DisableCors]
     public class TripsController : ControllerBase
     {
         private readonly AppDbContext _context;
+
+        //public TripsController() : base()
+        //{
+
+        //}
 
         public TripsController(AppDbContext context)
         {
@@ -26,7 +31,7 @@ namespace AngularAspNetCoreSPAApp.Controllers
         [HttpGet]
         public IEnumerable<JomoTrip> Gettbltrip()
         {
-            return _context.tbltrips;
+            return _context.Trip;
         }
 
         // GET: api/Trips/5
@@ -38,7 +43,7 @@ namespace AngularAspNetCoreSPAApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            var trip = await _context.tbltrips.FindAsync(id);
+            var trip = await _context.Trip.FindAsync(id);
 
             if (trip == null)
             {
@@ -92,7 +97,8 @@ namespace AngularAspNetCoreSPAApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.tbltrips.Add(trip);
+            trip.UserId = "AngularAspNetCoreSPAAppUser";
+            _context.Trip.Add(trip);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetTrip", new { id = trip.Id }, trip);
@@ -107,13 +113,13 @@ namespace AngularAspNetCoreSPAApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            var trip = await _context.tbltrips.FindAsync(id);
+            var trip = await _context.Trip.FindAsync(id);
             if (trip == null)
             {
                 return NotFound();
             }
 
-            _context.tbltrips.Remove(trip);
+            _context.Trip.Remove(trip);
             await _context.SaveChangesAsync();
 
             return Ok(trip);
@@ -121,7 +127,7 @@ namespace AngularAspNetCoreSPAApp.Controllers
 
         private bool TripExists(int id)
         {
-            return _context.tbltrips.Any(e => e.Id == id);
+            return _context.Trip.Any(e => e.Id == id);
         }
     }
 }

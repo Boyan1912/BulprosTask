@@ -22,7 +22,7 @@ export class TripDataService {
             Name: trip.name, Origin: trip.origin, Destination: trip.destination, Description: trip.description
         }
         
-        return this.http.post<JomoTrip>(ROOT_URL + '/Trips', body, { headers });
+        return this.http.post<JomoTrip>(ROOT_URL + 'Trips', body, { headers });
     }
 
     EditTrip(trip: JomoTrip) {
@@ -40,7 +40,7 @@ export class TripDataService {
         var body = {
             Name: trip.name, Origin: trip.origin, Destination: trip.destination, Description: trip.description
         }
-        return this.http.delete<JomoTrip>(ROOT_URL + '/Trips/' + trip.id)
+        return this.http.delete<JomoTrip>(ROOT_URL + 'Trips/' + trip.id)
     }
 }
 

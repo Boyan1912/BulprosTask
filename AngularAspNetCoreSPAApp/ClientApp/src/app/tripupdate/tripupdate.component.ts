@@ -30,7 +30,7 @@ export class TripUpdateComponent implements OnInit {
             alert("Trip updated successfully");
             this.nameEvent.emit("ccc");
             this.cb.nativeElement.click();
-        },
+        }
         )
     }
 

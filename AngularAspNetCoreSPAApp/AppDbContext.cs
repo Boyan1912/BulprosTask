@@ -12,7 +12,7 @@ namespace AngularAspNetCoreSPAApp
         {
 
         }
-        public DbSet<JomoTrip> tbltrips { get; set; }
+        public DbSet<JomoTrip> Trip { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -29,6 +29,18 @@ namespace AngularAspNetCoreSPAApp
 
 
             services.AddMvc(options => options.EnableEndpointRouting = false);
+            services.AddControllers()
+                    .ConfigureApiBehaviorOptions(options =>
+                    {
+                        options.SuppressConsumesConstraintForFormFileParameters = true;
+                        options.SuppressInferBindingSourcesForParameters = true;
+                        options.SuppressModelStateInvalidFilter = true;
+                        options.SuppressMapClientErrors = true;
+                        options.ClientErrorMapping[404].Link =
+                            "https://httpstatuses.com/404";
+                    });
+
+
             services.AddCors();
             services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("SqlConnection")));
         }
@@ -36,20 +48,25 @@ namespace AngularAspNetCoreSPAApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-            }
+            app.UseCors();
+            app.UseMiddleware();
 
-            app.UseStaticFiles();
-            if (!env.IsDevelopment())
-            {
-                app.UseSpaStaticFiles();
-            }
+            app.UseMvc();
+
+            //if (env.IsDevelopment())
+            //{
+            //    app.UseDeveloperExceptionPage();
+            //}
+            //else
+            //{
+            //    app.UseExceptionHandler("/Error");
+            //}
+
+            //app.UseStaticFiles();
+            //if (!env.IsDevelopment())
+            //{
+            //    app.UseSpaStaticFiles();
+            //}
 
             //app.UseRouting();
 
@@ -57,7 +74,8 @@ namespace AngularAspNetCoreSPAApp
             //{
             //    endpoints.MapControllerRoute(
             //        name: "default",
-            //        pattern: "{controller}/{action=Index}/{id?}");
+            //        //pattern: "{controller}/{action=Index}/{id?}");
+            //        pattern: "api/{controller}/{action=Index}/{id?}");
             //});
 
             app.UseSpa(spa =>
@@ -73,10 +91,6 @@ namespace AngularAspNetCoreSPAApp
                 }
             });
 
-            app.UseMiddleware();
-            app.UseCors();
-
-            app.UseMvc();
         }
     }
 }
