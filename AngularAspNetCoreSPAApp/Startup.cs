@@ -73,11 +73,7 @@ namespace AngularAspNetCoreSPAApp
                 }
             });
 
-
-
-
-
-            app.UseMiddleware<CorsMiddleware>();
+            app.UseMiddleware();
             app.UseCors();
 
             app.UseMvc();

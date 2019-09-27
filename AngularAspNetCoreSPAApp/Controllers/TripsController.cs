@@ -13,56 +13,56 @@ namespace AngularAspNetCoreSPAApp.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [DisableCors]
-    public class EmployeesController : ControllerBase
+    public class TripsController : ControllerBase
     {
         private readonly AppDbContext _context;
 
-        public EmployeesController(AppDbContext context)
+        public TripsController(AppDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Employees
+        // GET: api/Trips
         [HttpGet]
-        public IEnumerable<Employee> Gettblemployee()
+        public IEnumerable<JomoTrip> Gettbltrip()
         {
-            return _context.tblemployee;
+            return _context.tbltrips;
         }
 
-        // GET: api/Employees/5
+        // GET: api/Trips/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetEmployee([FromRoute] int id)
+        public async Task<IActionResult> GetTrip([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var employee = await _context.tblemployee.FindAsync(id);
+            var trip = await _context.tbltrips.FindAsync(id);
 
-            if (employee == null)
+            if (trip == null)
             {
                 return NotFound();
             }
 
-            return Ok(employee);
+            return Ok(trip);
         }
 
-        // PUT: api/Employees/5
+        // PUT: api/Trips/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmployee([FromRoute] int id, [FromBody] Employee employee)
+        public async Task<IActionResult> PutTrip([FromRoute] int id, [FromBody] JomoTrip trip)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != employee.ID)
+            if (id != trip.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(employee).State = EntityState.Modified;
+            _context.Entry(trip).State = EntityState.Modified;
 
             try
             {
@@ -70,7 +70,7 @@ namespace AngularAspNetCoreSPAApp.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!EmployeeExists(id))
+                if (!TripExists(id))
                 {
                     return NotFound();
                 }
@@ -83,47 +83,45 @@ namespace AngularAspNetCoreSPAApp.Controllers
             return NoContent();
         }
 
-        // POST: api/Employees
+        // POST: api/Trips
         [HttpPost]
-        public async Task<IActionResult> PostEmployee([FromBody] Employee employee)
+        public async Task<IActionResult> PostTrip([FromBody] JomoTrip trip)
         {
-
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.tblemployee.Add(employee);
+            _context.tbltrips.Add(trip);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetEmployee", new { id = employee.ID }, employee);
+            return CreatedAtAction("GetTrip", new { id = trip.Id }, trip);
         }
 
-        // DELETE: api/Employees/5
+        // DELETE: api/Trips/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEmployee([FromRoute] int id)
+        public async Task<IActionResult> DeleteTrip([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var employee = await _context.tblemployee.FindAsync(id);
-            if (employee == null)
+            var trip = await _context.tbltrips.FindAsync(id);
+            if (trip == null)
             {
                 return NotFound();
             }
 
-            _context.tblemployee.Remove(employee);
+            _context.tbltrips.Remove(trip);
             await _context.SaveChangesAsync();
 
-            return Ok(employee);
+            return Ok(trip);
         }
 
-        private bool EmployeeExists(int id)
+        private bool TripExists(int id)
         {
-            return _context.tblemployee.Any(e => e.ID == id);
+            return _context.tbltrips.Any(e => e.Id == id);
         }
     }
 }

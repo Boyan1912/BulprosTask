@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Angular6DemoServices.Controllers
+namespace AngularAspNetCoreSPAApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

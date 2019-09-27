@@ -3,28 +3,27 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AngularCRUDComponent } from './angular-crud/EmployeeList';
-import { EmployeeAddComponent } from './employee-add/employee-add.component';
-import { EmployeeupdateComponent } from './employeeupdate/employeeupdate.component';
+import { AngularCRUDComponent } from './angular-crud/TripList';
+import { TripAddComponent } from './trip-add/trip-add.component';
+import { TripUpdateComponent } from './tripupdate/tripupdate.component';
 
 import { FormsModule }   from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { EmployeeDataService } from '../app/DataService/EmployeeDataService';
+import { TripDataService } from '../app/DataService/TripDataService';
 
 @NgModule({
   declarations: [
     AppComponent,
     AngularCRUDComponent,
-    EmployeeAddComponent,
-    EmployeeupdateComponent
-    
-   
+    TripAddComponent,
+    TripUpdateComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,FormsModule,HttpClientModule
   ],
-  providers: [EmployeeDataService],
+  providers: [TripDataService],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
